@@ -1,149 +1,90 @@
-(function($module) {
 
-    checkRow(rowVal){
-        var a[10];
+    function checkRow(row, val){
         for(var i = 0; i < 9 ; i ++){
-            if (a[arr[i][colVal]] === true){
+            if (data[row][i] === val){
                 // Change arr[rowVal][i] box to red;
                 return false;
-            } else {
-                a[arr[i][colVal]] = true;
-            }   
-            return true;         
+            }                    
         }
+        return true;   
     }
 
-    checkCol(colVal){
-        var a[10];
+
+    function  checkCol(col, val){
         for(var i = 0; i < 9 ; i ++){
-            if (a[arr[i][colVal]] === true){
+            if (data[i][col] === val){
                 // Change arr[i][colVal] box to red;
                  return false;
-            } else {
-                a[arr[i][colVal]] = true;
             }       
-            return true;       
         }
+        return true;   
     }
 
-    checkBox(rowVal, colVal){
+
+    function checkBox(rowVal, colVal, val){
         var startRowIndex, stopRowIndex, startcolIndex, stopColIndex;
-        switch(rowVal) {
-            case rowVal < 3:
+        if(rowVal < 3) {
             startRowIndex = 0, 
             stopRowIndex = 2;
-            break;
-
-            case 2 < rowVal < 6:
+        } else if (rowVal < 6){
             startRowIndex = 3, 
             stopRowIndex = 5;
-            break;
-
-            case rowVal > 5:
+        } else {
             startRowIndex = 6, 
             stopRowIndex = 8;
-            break;
-
-            default:
-            console.log("Unidentified row val");
-
         }
 
-        switch(colVal) {
-            case colVal < 3:
+        if (colVal < 3) {
             startcolIndex = 0, 
             stopColIndex = 2;
-            break;
-
-            case 2 < colVal < 6:
+        } else if (colVal < 6) {
             startcolIndex = 3, 
             stopColIndex = 5;
-            break;
-
-            case colVal > 5:
+        } else {
             startcolIndex = 6, 
             stopColIndex = 8;
-            break;
-
-            default:
-            console.log("Unidentified col val");
 
         }
 
-        var a[10];
-
-        for(var i = startRowIndex; i =< stopRowIndex ; i ++){
-            for(var j = startcolIndex; j =< stopColIndex ; j ++)
-                if (a[arr[i][j]] === true){
+        for(var i = startRowIndex; i <= stopRowIndex ; i ++){
+            for(var j = startcolIndex; j <= stopColIndex ; j ++)
+                if (data[i][j] === val){
                     // Change arr[i][colVal]  to red;
                      return false;
-                } else {
-                    a[arr[i][j]] = true;
                 }   
             return true;      
         }
     }
 
 
-    checkBox(boxVal){
-        var startRowIndex, stopRowIndex, startcolIndex, stopColIndex;
-        switch(boxVal) {
-            case 1,4,7:
-            startRowIndex = 0, 
-            stopRowIndex = 2;
-            break;
+    function checkValue(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var val = e.keyCode;
+        var id = e.target.getAttribute("id");
+        //console.log(val);
 
-            case 2,5,8:
-            startRowIndex = 3, 
-            stopRowIndex = 5;
-            break;
+        if((val <= 48)||(val >= 58)){
+               return;          
+        } 
+        val = val - 48;
+        
+        var row = parseInt(id.substring(0,1));
+        var col = parseInt(id.substring(2));
 
-            case 3,6,9:
-            startRowIndex = 6, 
-            stopRowIndex = 8;
-            break;
-
-            default:
-            console.log("Unidentified row val");
+        if(!checkRow(row, val)){
             return;
-
         }
 
-        switch(colVal) {
-            case 1,4,7:
-            startcolIndex = 0, 
-            stopColIndex = 2;
-            break;
-
-            case 2,5,8:
-            startcolIndex = 3, 
-            stopColIndex = 5;
-            break;
-
-            case 3,6,9:
-            startcolIndex = 6, 
-            stopColIndex = 8;
-            break;
-
-            default:
-            console.log("Unidentified col val");
-
+        if(!checkCol(col, val)){
+            return;
+        }
+        if(!checkBox(row, col, val)){
+            return;
         }
 
-        var a[10];
+        e.target.value = "" + val;
+        data[row][col] = val;
 
-        for(var i = startRowIndex; i =< stopRowIndex ; i ++){
-            for(var j = startcolIndex; j =< stopColIndex ; j ++)
-                if (a[arr[i][j]] === true){
-                    // Change arr[i][colVal]  to red;
-                     return false;
-                } else {
-                    a[arr[i][j]] = true;
-                }  
-            return true;   
-        }
     }
 
-
-    $module.checker = checker;
-})(checker);

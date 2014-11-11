@@ -1,0 +1,13 @@
+        table, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 1px;
+           /* text-align: center; */
+            width: 20px;
+        }
+        input {
+            text-align: center;
+            maxlength: 1;
+        }
